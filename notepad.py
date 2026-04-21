@@ -3,9 +3,10 @@ def saveMo():
     def saved():
         newEnter = Enter.get()
         newtxt = txt.get("1.0","end-1c")
-        with open(newEnter + ".txt","w+") as file:
-            file.write(newtxt)
+        with open(newEnter + ".txt","w+") as files:
+            files.write(newtxt)
             print("succesfull")
+            top.destroy()
     def canceldaw():
         top.destroy()
     top = pad.Toplevel(window)
@@ -19,14 +20,26 @@ def saveMo():
     saveBtn.pack()
     cancelBtn = pad.Button(top,text="Cancel",command=canceldaw)
     cancelBtn.pack()
+def opened():
+    opTop = pad.Toplevel(window)
+    opTop.transient(window)
+    opTop.grab_set()
+    Labl = pad.Label(opTop,text="Saved Files")
+    Labl.pack()
+    menulist = pad.Listbox(opTop)
 
+    menulist.pack()
+    opnBtn = pad.Button(opTop,text="Open")
+    opnBtn.pack()
+def new():
+    txt.delete("1.0","end-1c")
 window = pad.Tk()
 window.title("Unknown Title")
 menus = pad.Menu(window)
 window.config(menu=menus)
 listmenu = pad.Menu(menus, tearoff=0)
-listmenu.add_command(label="New")
-listmenu.add_command(label="Open")
+listmenu.add_command(label="New",command=new)
+listmenu.add_command(label="Open",command=opened)
 listmenu.add_command(label="Save",command=saveMo)
 listmenu.add_separator()
 listmenu.add_command(label="Exit")
