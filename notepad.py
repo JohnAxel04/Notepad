@@ -1,4 +1,6 @@
 import tkinter as pad
+from tkinter import filedialog
+
 def saveMo():
     def saved():
         newEnter = Enter.get()
@@ -21,16 +23,15 @@ def saveMo():
     cancelBtn = pad.Button(top,text="Cancel",command=canceldaw)
     cancelBtn.pack()
 def opened():
-    opTop = pad.Toplevel(window)
-    opTop.transient(window)
-    opTop.grab_set()
-    Labl = pad.Label(opTop,text="Saved Files")
-    Labl.pack()
-    menulist = pad.Listbox(opTop)
+    openfile = filedialog.askopenfile(initialdir="C:\\Users\\user\\Documents\\Js",
+                                      title="Select File? ",
+                                      filetypes= (("text File","*.txt"),("All Files","*.*")))
+    if openfile:
+        content = openfile.read()
+        txt.delete("1.0","end")
+        txt.insert("1.0",content)
+        openfile.close()
 
-    menulist.pack()
-    opnBtn = pad.Button(opTop,text="Open")
-    opnBtn.pack()
 def new():
     txt.delete("1.0","end-1c")
 window = pad.Tk()
@@ -42,7 +43,7 @@ listmenu.add_command(label="New",command=new)
 listmenu.add_command(label="Open",command=opened)
 listmenu.add_command(label="Save",command=saveMo)
 listmenu.add_separator()
-listmenu.add_command(label="Exit")
+listmenu.add_command(label="Exit",command=window.destroy)
 menus.add_cascade(label="Edit",menu=listmenu)
 
 txt = pad.Text(window,width=30,height=20)
